@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# preparation
+VIMRC_PATH=$(pwd)
+
+# GOAL: let us install vim from source
+ 
+# Prerequisite libraries
+sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
+libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
+ 
+# remove vim if already installed
+sudo apt remove vim vim-runtime gvim
+ 
+# get the source and configure
+cd ~
+git clone https://github.com/vim/vim.git
+cd vim
+./configure --with-features=huge \
+                            --enable-multibyte \
+                            --enable-rubyinterp=yes \
+                            --enable-pythoninterp=yes \
+                            --enable-python3interp=yes \
+                            --with-python3-config-dir=/usr/lib/python3.*/config \
+                            --enable-perlinterp=yes \
+                            --enable-luainterp=yes \
+                            --enable-gui=gtk2 \
+                            --enable-cscope \
+                            --prefix=/usr/local
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+ 
+# let us install vim with make
+cd ~/vim
+sudo make install
+ 
+# let us set vim as the default editor
+sudo update-alternatives --install /usr/bin/editor editor /usr/local/bin/vim 1
+sudo update-alternatives --set editor /usr/local/bin/vim
+sudo update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 1
+sudo update-alternatives --set vi /usr/local/bin/vim
+ 
+# GOAL: install vundle, .vimrc and other plugins
+ 
+# let us git the source of vundle and put the files in the correct path
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+ 
+# let us soft link the vimrc in this directory to the home directory
+cd $VIMRC_PATH
+ln -sr .vimrc ~/.vimrc
+ 
+# let us install vim plugins via vundle
+vim +PluginInstall +qall
+ 
+# YouCompleteMe prerequisites
+sudo apt-get install build-essential cmake
+sudo apt-get install python-dev python3-dev
+ 
+# let us compile YCM
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --all
+
+# We shall soft link the .ycm_extra_conf.py in this folder to ~/.vim/
+cd $VIMRC_PATH
+ln -sr .ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
