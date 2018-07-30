@@ -54,6 +54,7 @@ set hlsearch
 
 " Color and the scheme
 set background=dark 
+set termguicolors
 colorscheme deus
 set t_Co=256
 
