@@ -20,3 +20,7 @@ My vim setup with automation
 [vim-airline/vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) | A collection of themes for vim-airline 
 [octol/vim-cpp-enhanced-highlight](https://github.com/octol/vim-cpp-enhanced-highlight) | Additional Vim syntax highlighting for C++ (including C++11/14) 
 [Valloric/YouCompleteMe](https://github.com/Valloric/YouCompleteMe) | A code-completion engine for Vim
+[lervag/vimtex](https://github.com/lervag/vimtex) | A modern vim plugin for editing LaTeX files.
+[rhysd/vim-clang-format](https://github.com/rhysd/vim-clang-format) | Vim plugin for clang-format, a formatter for C, C++, Obj-C, Java, JavaScript, TypeScript and ProtoBuf. 
+[ctrlpvim/ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) | Active fork of kien/ctrlp.vim—Fuzzy file, buffer, mru, tag, etc finder.
+
