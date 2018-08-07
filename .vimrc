@@ -14,6 +14,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'lervag/vimtex'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'ctrlpvim/ctrlp.vim'
 call vundle#end()
 
 " vim-airline settings
@@ -26,8 +28,8 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_theme='deus'
 
 " YouCompleteMe settings
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion = 0
 
 " vim.cpp enhanced highlight settings
 let g:cpp_class_scope_highlight = 1

@@ -12,7 +12,7 @@ libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
 python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
  
 # remove vim if already installed
-sudo apt remove vim vim-runtime gvim
+sudo apt purge vim vim-runtime gvim
  
 # get the source and configure
 cd ~
@@ -52,15 +52,30 @@ ln -sr .vimrc ~/.vimrc
  
 # let us install vim plugins via vundle
 vim +PluginInstall +qall
+
+# vim-clang-format requirements
+sudo apt install clang-format
  
 # YouCompleteMe prerequisites
-sudo apt-get install build-essential cmake
-sudo apt-get install python-dev python3-dev
+sudo apt install build-essential cmake
  
 # let us compile YCM
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --all
 
+# let us compile ycm_core
+cd ~
+rm -r ycm_temp
+mkdir ycm_temp
+cd ycm_temp
+wget https://releases.llvm.org/6.0.1/clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+tar xf clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz
+mv clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04 llvm_root_dir
+
+cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=~/ycm_temp/llvm_root_dir . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+
+cmake --build . --target ycm_core --config Release
+
 # We shall soft link the .ycm_extra_conf.py in this folder to ~/.vim/
 cd $VIMRC_PATH
-ln -sr .ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
+ln -sr .ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py
