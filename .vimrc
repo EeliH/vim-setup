@@ -30,7 +30,7 @@ let g:airline_theme='deus'
 " YouCompleteMe settings
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_autoclose_preview_window_after_completion = 0
-let g:airline_exclude_preview = 0
+set completeopt-=preview
 
 " vim.cpp enhanced highlight settings
 let g:cpp_class_scope_highlight = 1
