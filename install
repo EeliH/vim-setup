@@ -6,10 +6,9 @@ VIMRC_PATH=$(pwd)
 # GOAL: let us install vim from source
  
 # Prerequisite libraries
-sudo apt install libncurses5-dev libgnome2-dev libgnomeui-dev \
-libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev git
+sudo apt install libncurses5-dev libgtk2.0-dev libatk1.0-dev \
+libcairo2-dev libx11-dev libxpm-dev libxt-dev python2-dev \
+python3-dev ruby-dev lua5.2 liblua5.2-dev libperl-dev git
  
 # remove vim if already installed
 sudo apt purge vim vim-runtime gvim
@@ -19,17 +18,16 @@ cd ~
 git clone https://github.com/vim/vim.git
 cd vim
 ./configure --with-features=huge \
-                            --enable-multibyte \
-                            --enable-rubyinterp=yes \
-                            --enable-pythoninterp=yes \
-                            --enable-python3interp=yes \
-                            --with-python3-config-dir=/usr/lib/python3.*/config \
-                            --enable-perlinterp=yes \
-                            --enable-luainterp=yes \
-                            --enable-gui=gtk2 \
-                            --enable-cscope \
-                            --prefix=/usr/local
-make VIMRUNTIMEDIR=/usr/local/share/vim/vim81
+            --enable-multibyte \
+            --enable-rubyinterp=yes \
+            --enable-python3interp=yes \
+            --with-python3-config-dir=$(python3-config --configdir) \
+            --enable-perlinterp=yes \
+            --enable-luainterp=yes \
+            --enable-gui=gtk2 \
+            --enable-cscope \
+            --prefix=/usr/local
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim82
  
 # let us install vim with make
 cd ~/vim
@@ -57,25 +55,13 @@ vim +PluginInstall +qall
 sudo apt install clang-format
  
 # YouCompleteMe prerequisites
-sudo apt install build-essential cmake
+sudo apt install build-essential cmake vim-nox python3-dev
  
 # let us compile YCM
 cd ~/.vim/bundle/YouCompleteMe
-./install.py --all
-
-# let us compile ycm_core
-cd ~
-rm -r ycm_temp
-mkdir ycm_temp
-cd ycm_temp
-wget https://releases.llvm.org/6.0.1/clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-tar xf clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-mv clang+llvm-6.0.1-x86_64-linux-gnu-ubuntu-16.04 llvm_root_dir
-
-cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=~/ycm_temp/llvm_root_dir . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
-
-cmake --build . --target ycm_core --config Release
+python3 install.py --all
 
 # We shall soft link the .ycm_extra_conf.py in this folder to ~/.vim/
 cd $VIMRC_PATH
 ln -sr .ycm_extra_conf.py ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py
+
